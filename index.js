@@ -132,7 +132,7 @@ function addTodo(todo) {
     // 🔴 li.textContent ko hataya kyunki innerHTML use niche overwrite kar raha tha
     li.innerHTML = ` 
         <div class="flex flex-1 gap-1 "> 
-            <input type="checkbox" data-id="${todo.id}" ${todo.isCompleted ? 'checked' : ''}> 
+            <input  type="checkbox" style="accent-color:#a3e635;" data-id="${todo.id}" ${todo.isCompleted ? 'checked' : ''}> 
             <p class="${todo.isCompleted ? 'line-through text-slate-400' : ''}"> ${todo.text}</p> 
         </div> 
         <div class="flex gap-2"> 
