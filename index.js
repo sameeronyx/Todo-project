@@ -1,180 +1,121 @@
-// let todos = [];
-// const todoForm = document.querySelector("#todo-form");
-// const todoInput = document.querySelector("#todo-input");
-// const todolist = document.querySelector("#todo-list")
+
+const todoForm = document.querySelector("#todo-form");
+const todoInput = document.querySelector("#todo-input");
+const todoList = document.querySelector("#todo-list");
+const taskCount = document.querySelector("#task-count");
+const taskCompleteCount = document.querySelector("#complete-count");
+let todos = [];
 
 
-// todoForm.addEventListener('submit', (e) => {
-//     e.preventDefault();
-//     const todoValue = todoInput.value
-//     todos.push(newTodo)
-
-//     let newTodo = {
-//         id: Date.now()+1,
-//         text: todoValue,
-//         isCompleted: false
-//     }
-//     addTodo(newTodo)
+todoForm.addEventListener("submit", (e) => {
+    e.preventDefault();
 
 
-// });
+    const todoValue = todoInput.value.trim();
 
-// function renderTodo() {
-//     todos.forEach(function (todo) {
-//         addTodo(todo)
-//     })
+    if (!todoValue) return;
 
-// }
-
-// renderTodo()
-
-// function addTodo(todo) {
-//     const li = document.createElement("li")
-//     li.textContent = todo
-//     todolist.append(li)
-//     li.className = `flex  gap-2 border border-slate-400 p-4 rounded-lg mb-3 `
-//     li.innerHTML = ` 
-    
-//                     <div class="flex  flex-1 gap-1 ">
-//                         <input type="checkbox" data-id=${todo.id}>
-//                         <p> ${todo.text}</p>
-//                     </div>
-//                     <div class="flex gap-2">
-//                         <button data-action="edit" data-id=${todo.id}>Edit </button>
-//                         <button data-action="delete" data-id=${todo.id}>Delete</button>
-//                     </div>
+    let newTodo = {
+        id: Date.now(),
+        text: todoValue,
+        isCompleted: false
+    }
 
 
-                
-// `
-// }
 
-// todolist.addEventListener("click", (e) => {
+    todos.push(newTodo);
+    addTodo(newTodo);
+    updateCount();
+    todoInput.value = "";
 
-//     let btn = e.target.closest("button")
-//     let action = btn?.dataset.action;
-//     let id = btn?.dataset.id;
-//     let checkbox = e.target.closest('input[type="checkbox"]')
-
-//     if (checkbox) {
-//         todos = todos.map((todo)=>{
-//              if ((todo.id === Number(id))) {
-//             return {
-//                 ...todo,
-//                 isCompleted:!todo.isCompleted
-//             }
-//         }
-//         return todo
+})
 
 
-//         })
+function addTodo(todo) {
+
+    const listItem = document.createElement("li");
+    listItem.classList = " flex  gap-5  bg-[#1f2329] p-4  rounded-lg";
+
+    listItem.innerHTML = ` <div class="flex  flex-1 gap-2 ">
+                        <input type="checkbox"  data-id ="${todo.id}" ${todo.isCompleted ? "checked" : ""}  class="accent-[#b6ff2e]" >
+                        <p  class="font-vanguard font-bold text-md text-[#b6ff2e] capitalize py-1 ${todo.isCompleted ? "line-through opacity-50 text-red-400" : ""}" id="todo-msg"> ${todo.text}</p>
+                    </div>
+                    <div class="flex gap-3">
+                        <button type ="button" data-action = "edit" data-id="${todo.id}" class="font-vanguard font-bold text-md text-[#b6ff2e] uppercase  border-[#b6ff2e] px-2 py-1 rounded-md border-2 cursor-pointer">Edit </button>
+                        <button type="button" data-action = "delete" data-id="${todo.id}" class="font-vanguard font-bold text-md text-[#b6ff2e] uppercase  border-[#b6ff2e] px-2 py-1 rounded-md border-2 cursor-pointer">Delete</button>
+                    </div>`
+
+
+    todoList.append(listItem);
+
+
+}
+
+function rendertodo() {
+    todoList.innerHTML = "";
+
+    todos.forEach(function (todo) {
+        addTodo(todo);
+    }
+
+    )
+
+}
+
+todoList.addEventListener("change", (e) => {
+
+    const checkBox = e.target.closest('input[type="checkbox"]')
+    if (checkBox) {
+        const id = Number(checkBox.dataset.id)
+        todos = todos.map((todo) => {
+            if (todo.id == id) {
+                return {
+                    ...todo, isCompleted: checkBox.checked
+                }
+            }
+            return todo;
+        
+            
+        })
+        updateCount();
+        rendertodo();
 
         
 
-//     }
-//     if (action === "delete") {
-//         deleteTodo(e, id)
-//         // renderTodo
-
-//     }
-//     if (checkbox){
-//         todos
-//     }
+    }
 
 
 
-// })
-// function deleteTodo(e, id) {
-//     e.target.closest('li').remove()
+})
 
-//     todos = todos.filter((todo) => {
-//         if ((todo.id !== Number(id))) {
-//             return todo
-//         }
 
-//     })
+todoList.addEventListener("click", (e) => {
 
-// }
 
-let todos = []; 
-const todoForm = document.querySelector("#todo-form"); 
-const todoInput = document.querySelector("#todo-input"); 
-const todolist = document.querySelector("#todo-list");
+    const btn = e.target.closest("button")
 
-todoForm.addEventListener('submit', (e) => { 
-    e.preventDefault(); 
-    const todoValue = todoInput.value.trim(); // trim() space hatane ke liye
-    
-    if (!todoValue) return; // Khali input submit na ho
+    if (!btn) return;
 
-    let newTodo = { 
-        id: Date.now(), // Date.now() hi kaafi hai unique id ke liye
-        text: todoValue, 
-        isCompleted: false 
-    };
+    if (btn.dataset.action === "delete") {
+        const id = Number(btn.dataset.id);
+        todos = todos.filter(todo => todo.id !== id);
+        rendertodo()
+        updateCount()
+    }
 
-    todos.push(newTodo); //  YAHAN Galti thi: Pehle aap sirf todoValue push kar rahe the
-    addTodo(newTodo);
-    todoInput.value = ""; // Input box ko khali karne ke liye
-});
 
-function renderTodo() { 
-    todolist.innerHTML = ""; // Re-render se pehle list saaf karne ke liye
-    todos.forEach(function (todo) { 
-        addTodo(todo);
-    });
-} 
+})
 
-function addTodo(todo) { 
-    const li = document.createElement("li");
-    li.className = `flex gap-2 border border-slate-400 p-4 rounded-lg mb-3`; 
-    
-    // 🔴 li.textContent ko hataya kyunki innerHTML use niche overwrite kar raha tha
-    li.innerHTML = ` 
-        <div class="flex flex-1 gap-1 "> 
-            <input  type="checkbox" data-id="${todo.id}" ${todo.isCompleted ? 'checked' : ''}> 
-            <p class="${todo.isCompleted ? 'line-through text-slate-400' : ''}"> ${todo.text}</p> 
-        </div> 
-        <div class="flex gap-2"> 
-            <button data-action="edit" data-id="${todo.id}">Edit</button> 
-            <button data-action="delete" data-id="${todo.id}">Delete</button> 
-        </div> 
-    `;
-    todolist.append(li); 
-} 
+function updateCount() {
+    taskCount.textContent = `TASK(${todos.length})`
 
-todolist.addEventListener("click", (e) => { 
-    let btn = e.target.closest("button"); 
-    let action = btn?.dataset.action; 
-    let id = btn?.dataset.id || e.target.dataset.id; // ID handle karne ke liye
-    
-    // 🔴 Sahi selector use kiya checkbox ke liye
-    let checkbox = e.target.closest('input[type="checkbox"]'); 
+    const completed = todos.filter(todo => todo.isCompleted).length;
 
-    if (checkbox) { 
-        todos = todos.map((todo) => { 
-            if (todo.id === Number(id)) { 
-                return { ...todo, isCompleted: !todo.isCompleted }; 
-            } 
-            return todo; 
-        });
-        // Checkbox click hone par styling update karne ke liye re-render kr sakte hain
-        renderTodo(); 
-    } 
+    taskCompleteCount.textContent = `COMPLETED(${completed})`
 
-    if (action === "delete") { 
-        deleteTodo(e, id); 
-    } 
-});
 
-function deleteTodo(e, id) { 
-    e.target.closest('li').remove(); 
-    todos = todos.filter((todo) => todo.id !== Number(id)); 
+
 }
-
-
-
-
 
 
 

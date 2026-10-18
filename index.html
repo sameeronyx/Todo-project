@@ -8,38 +8,42 @@
     <link rel="stylesheet" href="output.css">
 </head>
 
-<body class=" w-full bg-linear-to-r from-slate-400 via-green-300 to-lime-950/40 p-6">
-    <div class=" p-10 w-fit mx-auto my-10 bg-white rounded-lg ">
-        <div class="bg-green-400 px-5 py-3 w-full my-5 rounded-lg  border border-green-800">
-            <h1 class="text-white font-bold font-serif ">Todo App</h1>
+<body class=" w-full bg-[#1f2329] p-6">
+    <div class=" p-10 w-fit mx-auto my-10 bg-[#b6ff2e] rounded-lg ">
+        <div class="bg-[#1f2329] px-5 py-3 w-full my-5 rounded-lg  border border-green-800">
+            <h1 class="text-[#b6ff2e] uppercase font-bold font-vanguard text-2xl ">Todo App</h1>
         </div>
         <div>
             <form action="" id="todo-form">
 
                 <div class="">
-                    <input id="todo-input" type="text" class=" rounded-lg border border-green-800  px-3 py-2 "
-                        placeholder="enter your task">
-                    <button id="add-task" class=" rounded-lg bg-green-400 px-4 py-2 border border-lime-900">Add</button>
+                    <input id="todo-input" type="text"
+                        class=" outline-0 rounded-md text-xl  border-[#1f2329] capatalize  border-2 px-3 py-2 "
+                        placeholder="Enter your task">
+                    <button id="add-task" type="submit"
+                        class=" rounded-md bg-[#1f2329] text-[#b6ff2e] font-bold uppercase font-Athelas px-4 py-2 justify-center border border-lime-900 cursor-pointer ">Add</button>
             </form>
 
             <div class="flex justify-between py-3 text-xs border-b border-black ">
-                <span>TASK(1)</span>
-                <span>COMPLETED(1)</span>
+                <span id="task-count"
+                    class="font-vanguard font-bold text-[#1f2329] text-sm  cursor-pointer">TASK(0)</span>
+                <span id="complete-count"
+                    class="font-vanguard font-bold text-[#1f2329] text-sm cursor pointer">COMPLETED(0)</span>
             </div>
-            <ul id="todo-list" class="py-5 flex flex-col">
-
-                <!-- <li  data-id ="1" class=" flex  gap-2 border border-slate-200 p-4 rounded-lg">
-                    <div class="flex  flex-1 gap-1 ">
-                        <input type="checkbox">
-                        <p></p>
+            <ul id="todo-list" class="py-5 flex flex-col gap-2">
+                <!-- 
+                <li  data-id ="1" class=" flex  gap-2   bg-[#1f2329] p-4 rounded-lg">
+                    <div class="flex  flex-1 gap-2 ">
+                        <input type="checkbox" class="accent-[#b6ff2e]">
+                        <p class="font-vanguard font-bold text-md text-[#b6ff2e] capatalize  py-1  "> sameer</p>
                     </div>
-                    <div class="flex gap-2">
-                        <button data-id="1">Edit </button>
-                        <button data-id="1">Delete</button>
+                    <div class="flex gap-3">
+                        <button data-id="1" class="font-vanguard font-bold text-md text-[#b6ff2e] uppercase border border-[#b6ff2e] px-2 py-1 rounded-md border-2">Edit </button>
+                        <button data-id="1" class="font-vanguard font-bold text-md text-[#b6ff2e] uppercase border border-[#b6ff2e] px-2 py-1 rounded-md border-2">Delete</button>
                     </div>
+ -->
 
-
-                </li> -->
+                </li>
 
             </ul>
         </div>
